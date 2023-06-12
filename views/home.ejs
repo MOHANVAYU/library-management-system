@@ -21,16 +21,16 @@
                 <a class="nav-link" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link" href="/user/profile">Profile</a>
               </li>
               <% if ( user == null ) { %>
               <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/auth/login">Login</a>
               </li>
               <% } %>
               <% if (user != null ) { %>
               <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="/user/logout">Logout</a>
               </li>
               <% } %>
               <li class="nav-item">
@@ -51,7 +51,7 @@
               <div class="card-body">
                 <h5 class="card-title"><%=item.title%></h5>
                 <p class="card-text"><%=item.author%></p>
-                <a href="/borrow/<%=item._id%>" class="btn <%=(item.status ? 'btn-primary' : 'btn-secondary') %>"><%=item.status ? 'Borrow' : 'On Loan'%></a>
+                <a href="/user/borrow/<%=item._id%>" class="btn <%=(item.status ? 'btn-primary' : 'btn-secondary') %>"><%=item.status ? 'Borrow' : 'On Loan'%></a>
               </div>
             </div>
             <% }) %>
