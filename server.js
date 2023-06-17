@@ -4,6 +4,7 @@ const session=require('express-session');
 const cookieParser=require('cookie-parser');
 const authRouter=require('./routes/auth');
 const userRouter=require('./routes/user');
+const adminRouter=require('./routes/admin');
 
 const oneDay=100*60*60*24;
 
@@ -29,6 +30,7 @@ app.get('/',(req,res)=>{
 })
 
 app.use('/auth',authRouter);
+app.use('/admin',adminRouter);
 
 app.use('/user',(req,res,next)=>{
     if(req.session.username==null){
