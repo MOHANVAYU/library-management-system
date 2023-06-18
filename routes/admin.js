@@ -34,7 +34,7 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/root',(req,res)=>{
-    if(req.session.username==null){
+    if(req.session.username==null || req.session.username!='alan'){
         res.redirect('/admin/root/login');
     }else{
         res.render('admin',{admin:req.session.username});

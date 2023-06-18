@@ -41,11 +41,11 @@ router.post('/login',(req,res)=>{
 })
 
 router.get('/error',(req,res)=>{
-    res.render('error');
+    res.render('error',{user:req.session.username});
 })
 
 router.get('/success',(req,res,next)=>{
-    res.render('sucess');
+    res.render('sucess',{user:req.session.username});
 })
 
 module.exports=router;
