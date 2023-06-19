@@ -49,3 +49,7 @@ router.get('/success',(req,res,next)=>{
 })
 
 module.exports=router;
+/* 
+remaining routes
+    -- /auth/morebooks
+*/
