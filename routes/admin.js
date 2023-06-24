@@ -6,13 +6,13 @@
 
     /admin/root/logout --get/done
 
-    /admin/root/add/user --get
-    /admin/root/add/user --post
+    /admin/root/add/user --get/done
+    /admin/root/add/user --post/done
 
     /admin/root/add/book --get
     /admin/root/add/book --post
 
-    /admin/root/userlist --get
+    /admin/root/userlist --get/done
  */
 const express=require('express');
 const router=express.Router();
@@ -20,12 +20,12 @@ const router=express.Router();
 const client=require('mongodb').MongoClient;
 const objid=require('mongodb').ObjectId;
 
-const url="mongodb+srv://mohan1166:mohan@mongomohan.0nmgc5i.mongodb.net/?retryWrites=true&w=majority";
+const url='mongodb://localhost:27017';
 
 let dbInstance;
 
 client.connect(url).then((database)=>{
-    dbInstance=database.db('MohanLibrary');
+    dbInstance=database.db('College');
     console.log('conected admin');
 })
 
@@ -47,7 +47,9 @@ router.get('/root/login',(req,res)=>{
 
 router.post('/root/login',(req,res)=>{
     dbInstance.collection('admin').find({admin:req.body.username}).toArray().then(data=>{
-        if(req.body.username==data[0].admin && req.body.password==data[0].password){
+        let adminUser=req.body.username.trim();
+        let adminPwd=req.body.password.trim();
+        if(adminUser==data[0].admin && adminPwd==data[0].password){
             req.session.username=data[0].admin;
             res.redirect('/admin/root');
         }else{
@@ -67,5 +69,32 @@ router.get('/root/logout',(req,res)=>{
         res.redirect('/');
     }
 })
+
+router.get('/root/add/user',(req,res)=>{
+    if(req.session.username!='alan'){
+        res.redirect('/admin/root/login');
+    }else{
+        res.render('add-user',{admin:req.session.username,data:false});
+    }
+});
+
+router.post('/root/add/user',(req,res)=>{
+    let user={
+        "username":req.body.user.toLowerCase(),
+        "borrowed":""
+        };
+    dbInstance.collection('users').insertOne(user);
+    res.render('add-user',{admin:req.session.username,data:true});
+});
+
+router.get('/root/userlist',(req,res)=>{
+    if(req.session.username!='alan'){
+        res.redirect('/admin/root/login');
+    }else{
+        dbInstance.collection('users').find({}).toArray().then(users=>{
+        res.render('userlist',{admin:req.session.username,data:users});
+        })
+    }
+});
 
 module.exports=router;

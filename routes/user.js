@@ -4,12 +4,12 @@ const router=express.Router();
 const client=require('mongodb').MongoClient;
 const objid=require('mongodb').ObjectId;
 
-const url="mongodb+srv://mohan1166:mohan@mongomohan.0nmgc5i.mongodb.net/?retryWrites=true&w=majority";
+const url='mongodb://localhost:27017';
 
 let dbInstance;
 
 client.connect(url).then((database)=>{
-    dbInstance=database.db('MohanLibrary');
+    dbInstance=database.db('College');
     console.log('conected user');
 })
 

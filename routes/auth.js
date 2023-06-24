@@ -2,12 +2,12 @@ const express=require('express');
 const router=express.Router();
 const client=require('mongodb').MongoClient;
 
-const url="mongodb+srv://mohan1166:mohan@mongomohan.0nmgc5i.mongodb.net/?retryWrites=true&w=majority";
+const url='mongodb://localhost:27017';
 
 let dbInstance;
 
 client.connect(url).then((database)=>{
-    dbInstance=database.db('MohanLibrary');
+    dbInstance=database.db('College');
     console.log('conected auth');
 })
 
@@ -28,8 +28,8 @@ router.post('/login',(req,res)=>{
         }
         let flag=false;
         result.forEach(element => {
-            if(element.username==req.body.username){
-                req.session.username=req.body.username;
+            if(element.username==req.body.username.toLowerCase()){
+                req.session.username=req.body.username.toLowerCase();
                 flag=true;
                 res.redirect('/user/');
             }
